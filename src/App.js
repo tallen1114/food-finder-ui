@@ -56,7 +56,7 @@ function App() {
         <>
           <ul>
             {cereals.map((cereal) => (
-              <li key={cereal.Id}>{cereal.description}</li>
+              <li key={cereal.Id}>{cereal.description} ({cereal.brand_owner})</li>
             ))}
           </ul>
           {offset > 0 && ( // Show "Previous Page" button if offset > 0
