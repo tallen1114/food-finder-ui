@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ExcludeButton from './components/ExcludeButton';
 
 function App() {
   const [maxSugar, setMaxSugar] = useState(10); // Initial max sugar value
@@ -53,22 +54,31 @@ function App() {
       {isLoading ? (
         <p>Loading cereals...</p>
       ) : (
-        <>
-          <ul>
-            {cereals.map((cereal) => (
-              <li key={cereal.Id}>{cereal.description} ({cereal.brand_owner})</li>
-            ))}
-          </ul>
-          {offset > 0 && ( // Show "Previous Page" button if offset > 0
-            <button onClick={handlePreviousPage} disabled={isLoading}>
-              Previous Page
-            </button>
-          )}
-          <button onClick={handleNextPage} disabled={isLoading}>
-            Next Page
+      <>
+        <ul>
+          {cereals.map((cereal) => {
+            const query = encodeURIComponent(`${cereal.description} ${cereal.brand_owner}`);
+            const url = `https://google.com/search?q=${query}`;
+
+            return (
+              <li key={cereal.Id}>
+                <a href={url} target="_blank">
+                  {cereal.description} ({cereal.brand_owner})
+                </a> <ExcludeButton upc={cereal.upc}/>
+              </li>
+            );
+          })}
+        </ul>
+        {offset > 0 && ( 
+          <button onClick={handlePreviousPage} disabled={isLoading}>
+            Previous Page
           </button>
-        </>
-      )}
+        )}
+        <button onClick={handleNextPage} disabled={isLoading}>
+          Next Page
+        </button>
+      </>
+    )}
     </div>
   );
 }
