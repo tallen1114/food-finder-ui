@@ -144,6 +144,11 @@ function App() {
         <p>Loading cereals...</p>
       ) : (
       <>
+        {reloadTrigger > 0 && (
+          <p>
+          {cereals.length}{cereals.length == NUM_PER_PAGE ? '+' : ''} Results
+        </p>
+        )}
         <ul>
           {cereals.map((cereal) => {
             const query = encodeURIComponent(`${cereal.description} ${cereal.brand_owner}`);
