@@ -87,94 +87,103 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Cereal Finder</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="maxSugar">Max Sugar (g): </label>
-          <input
-            type="number"
-            id="maxSugar"
-            value={maxSugar}
-            onChange={handleMaxSugarChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="maxSodium">Max Sodium (mg): </label>
-          <input
-            type="number"
-            id="maxSodium"
-            value={maxSodium}
-            onChange={handleMaxSodiumChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="maxCalories">Max Calories: </label>
-          <input
-            type="number"
-            id="maxCalories"
-            value={maxCalories}
-            onChange={handleMaxCaloriesChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="minFiber">Min Fiber (g): </label>
-          <input
-            type="number"
-            id="minFiber"
-            value={minFiber}
-            onChange={handleMinFiberChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="minProtein">Min Protein (g): </label>
-          <input
-            type="number"
-            id="minProtein"
-            value={minProtein}
-            onChange={handleMinProteinChange}
-          />
-        </div>
-        <button type="submit" disabled={isLoading}>
-            Load Cereals
-          </button>
-      </form>
+    <div className="grid-container">
+      <div className="header">
+        <h1>Cereal Finder</h1>
+      </div>
+      <div className="filters">
+          <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="maxSugar">Max Sugar (g): </label><br></br>
+            <input
+              type="number"
+              id="maxSugar"
+              value={maxSugar}
+              onChange={handleMaxSugarChange}
+            />
+          </div>
+          <br></br>
+          <div>
+            <label htmlFor="maxSodium">Max Sodium (mg): </label><br></br>
+            <input
+              type="number"
+              id="maxSodium"
+              value={maxSodium}
+              onChange={handleMaxSodiumChange}
+            />
+          </div><br></br>
+          <div>
+            <label htmlFor="maxCalories">Max Calories: </label><br></br>
+            <input
+              type="number"
+              id="maxCalories"
+              value={maxCalories}
+              onChange={handleMaxCaloriesChange}
+            />
+          </div><br></br>
+          <div>
+            <label htmlFor="minFiber">Min Fiber (g): </label><br></br>
+            <input
+              type="number"
+              id="minFiber"
+              value={minFiber}
+              onChange={handleMinFiberChange}
+            />
+          </div><br></br>
+          <div>
+            <label htmlFor="minProtein">Min Protein (g): </label><br></br>
+            <input
+              type="number"
+              id="minProtein"
+              value={minProtein}
+              onChange={handleMinProteinChange}
+            />
+          </div><br></br>
+          <button type="submit" disabled={isLoading}>
+              Load Cereals
+            </button>
+        </form>
+      </div>
+      <div className="main">
+        {isLoading ? (
+            <p>Loading cereals...</p>
+          ) : (
+          <>
+            {reloadTrigger > 0 && (
+              <p>
+              {cereals.length}{cereals.length == NUM_PER_PAGE ? '+' : ''} Results
+            </p>
+            )}
+            <ul>
+              {cereals.map((cereal) => {
+                const query = encodeURIComponent(`${cereal.description} ${cereal.brand_owner}`);
+                const url = `https://google.com/search?q=${query}`;
 
-      {isLoading ? (
-        <p>Loading cereals...</p>
-      ) : (
-      <>
-        {reloadTrigger > 0 && (
-          <p>
-          {cereals.length}{cereals.length == NUM_PER_PAGE ? '+' : ''} Results
-        </p>
+                return (
+                  <li key={cereal.Id}>
+                    <a href={url} target="_blank">
+                      {cereal.description} ({cereal.brand_owner})
+                    </a> <ExcludeButton upc={cereal.upc}/>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         )}
-        <ul>
-          {cereals.map((cereal) => {
-            const query = encodeURIComponent(`${cereal.description} ${cereal.brand_owner}`);
-            const url = `https://google.com/search?q=${query}`;
+      </div>
 
-            return (
-              <li key={cereal.Id}>
-                <a href={url} target="_blank">
-                  {cereal.description} ({cereal.brand_owner})
-                </a> <ExcludeButton upc={cereal.upc}/>
-              </li>
-            );
-          })}
-        </ul>
-        {offset > 0 && ( 
-          <button onClick={handlePreviousPage} disabled={isLoading}>
-            Previous Page
-          </button>
-        )}
-        {cereals.length == NUM_PER_PAGE && (
-          <button onClick={handleNextPage} disabled={isLoading}>
-          Next Page
-        </button>
-        )}
-      </>
-    )}
+      <div className="footer">
+      {offset > 0 && ( 
+              <button onClick={handlePreviousPage} disabled={isLoading}>
+                Previous Page
+              </button>
+            )}
+            {cereals.length == NUM_PER_PAGE && (
+              <button onClick={handleNextPage} disabled={isLoading}>
+              Next Page
+            </button>
+            )}
+      </div>
     </div>
   );
 }

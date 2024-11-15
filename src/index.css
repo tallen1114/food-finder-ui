@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.header { grid-area: header; text-align: center;}
+.filters { grid-area: menu; height: 70vh;}
+.main { grid-area: main; overflow: auto; height: 70vh; }
+.footer { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'menu main main main main main'
+    'footer footer footer footer footer footer';
+  gap: 2px;
+  background-color: #bbc1c7;
+  padding: 5px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px ;
+  font-size: 20px;
+}
