@@ -3,11 +3,15 @@ import ExcludeButton from './components/ExcludeButton';
 
 function App() {
   const [maxSugar, setMaxSugar] = useState(''); // Initial max sugar value
+  const [minProtein, setMinProtein] = useState('');
+  const [minFiber, setMinFiber] = useState('');
+  const [maxSodium, setMaxSodium] = useState('');
+  const [maxCalories, setMaxCalories] = useState('');
   const [cereals, setCereals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [offset, setOffset] = useState(0); // State for offset
   const [reloadTrigger, setReloadTrigger] = useState(0); // Add a trigger state
-  
+
   // useEffect triggers automatically when one of the specified values changes
   useEffect(() => {
     if (reloadTrigger > 0) { // Only load if reloadTrigger is greater than 0
@@ -24,6 +28,10 @@ function App() {
     try {
       const queryParams = new URLSearchParams({
         maxSugar: maxSugar ? maxSugar : '', // Only include if it is not empty
+        minProtein: minProtein ? minProtein : '',
+        minFiber: minFiber ? minFiber : '',
+        maxSodium: maxSodium ? maxSodium : '',
+        maxCalories: maxCalories ? maxCalories: '',
         offset,
       });
 
@@ -42,6 +50,31 @@ function App() {
     setOffset(0); //reset to first page
   };
 
+  const handleMinProteinChange = (event) => {
+    setMinProtein(event.target.value);
+    setOffset(0); //reset to first page
+  };
+
+  const handleMinFiberChange = (event) => {
+    setMinFiber(event.target.value);
+    setOffset(0); //reset to first page
+  };
+
+  const handleMaxSodiumChange = (event) => {
+    setMaxSodium(event.target.value);
+    setOffset(0); //reset to first page
+  };
+
+  const handleMaxCaloriesChange = (event) => {
+    setMaxCalories(event.target.value);
+    setOffset(0); //reset to first page
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+    setReloadTrigger(reloadTrigger + 1); // Trigger reload
+  };
+
   const handleNextPage = () => {
     setOffset(offset + 500);
     setReloadTrigger(reloadTrigger + 1); // Trigger reload
@@ -55,18 +88,56 @@ function App() {
   return (
     <div>
       <h1>Cereal Finder</h1>
-      <div>
-        <label htmlFor="maxSugar">Max Sugar (grams): </label>
-        <input
-          type="number"
-          id="maxSugar"
-          value={maxSugar}
-          onChange={handleMaxSugarChange}
-        />
-        <button onClick={() => setReloadTrigger(reloadTrigger + 1)} disabled={isLoading}>
-          Load Cereals
-        </button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="maxSugar">Max Sugar (g): </label>
+          <input
+            type="number"
+            id="maxSugar"
+            value={maxSugar}
+            onChange={handleMaxSugarChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="maxSodium">Max Sodium (mg): </label>
+          <input
+            type="number"
+            id="maxSodium"
+            value={maxSodium}
+            onChange={handleMaxSodiumChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="maxCalories">Max Calories: </label>
+          <input
+            type="number"
+            id="maxCalories"
+            value={maxCalories}
+            onChange={handleMaxCaloriesChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="minFiber">Min Fiber (g): </label>
+          <input
+            type="number"
+            id="minFiber"
+            value={minFiber}
+            onChange={handleMinFiberChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="minProtein">Min Protein (g): </label>
+          <input
+            type="number"
+            id="minProtein"
+            value={minProtein}
+            onChange={handleMinProteinChange}
+          />
+        </div>
+        <button type="submit" disabled={isLoading}>
+            Load Cereals
+          </button>
+      </form>
 
       {isLoading ? (
         <p>Loading cereals...</p>
