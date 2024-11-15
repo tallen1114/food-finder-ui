@@ -11,6 +11,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [offset, setOffset] = useState(0); // State for offset
   const [reloadTrigger, setReloadTrigger] = useState(0); // Add a trigger state
+  const NUM_PER_PAGE = 500;
 
   // useEffect triggers automatically when one of the specified values changes
   useEffect(() => {
@@ -76,12 +77,12 @@ function App() {
   };
 
   const handleNextPage = () => {
-    setOffset(offset + 500);
+    setOffset(offset + NUM_PER_PAGE);
     setReloadTrigger(reloadTrigger + 1); // Trigger reload
   };
 
   const handlePreviousPage = () => {
-    setOffset(Math.max(0, offset - 500)); // Ensure offset doesn't go below 0
+    setOffset(Math.max(0, offset - NUM_PER_PAGE)); // Ensure offset doesn't go below 0
     setReloadTrigger(reloadTrigger + 1); // Trigger reload
   };
 
@@ -162,7 +163,7 @@ function App() {
             Previous Page
           </button>
         )}
-        {cereals.length > 0 && (
+        {cereals.length == NUM_PER_PAGE && (
           <button onClick={handleNextPage} disabled={isLoading}>
           Next Page
         </button>
