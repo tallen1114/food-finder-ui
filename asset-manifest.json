@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/food-finder-ui/static/css/main.bb0590ec.css",
+    "main.js": "/food-finder-ui/static/js/main.06e7eda4.js",
+    "static/js/453.74fa7b34.chunk.js": "/food-finder-ui/static/js/453.74fa7b34.chunk.js",
+    "index.html": "/food-finder-ui/index.html",
+    "main.bb0590ec.css.map": "/food-finder-ui/static/css/main.bb0590ec.css.map",
+    "main.06e7eda4.js.map": "/food-finder-ui/static/js/main.06e7eda4.js.map",
+    "453.74fa7b34.chunk.js.map": "/food-finder-ui/static/js/453.74fa7b34.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb0590ec.css",
+    "static/js/main.06e7eda4.js"
+  ]
+}
