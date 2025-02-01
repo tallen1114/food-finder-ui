@@ -18,7 +18,7 @@ const ExcludeButton = ({ upc }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:8080/excludeCereal', {
+      const response = await fetch('https://food-finder-api-um63.onrender.com/excludeCereal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
