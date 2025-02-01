@@ -36,7 +36,7 @@ function App() {
         offset,
       });
 
-      const response = await fetch(`http://localhost:8080/search?${queryParams}`);
+      const response = await fetch(`https://food-finder-api-um63.onrender.com/search?${queryParams}`);
       const data = await response.json();
       setCereals(data);
     } catch (error) {
